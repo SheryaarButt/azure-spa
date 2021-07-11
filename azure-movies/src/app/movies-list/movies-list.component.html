@@ -1,0 +1,11 @@
+<div class="container container-fluid">
+  <div class="row">
+    <div class="card col-md-3 align-self-center" *ngFor="let movie of moviesList">
+      <img [src]="movie.poster" [alt]="movie.plot" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{movie.title}}</h5>
+        <p class="card-text">{{movie.plot}}</p>
+      </div>
+    </div>
+  </div>
+</div>
