@@ -8,6 +8,6 @@ export class MoviesService {
   constructor() { }
 
   getMovies() {
-    return fetch('http://localhost:7071/api/GetMovies').then(movies => movies.json());
+    return fetch('api/GetMovies').then(movies => movies.json());
   }
 }
