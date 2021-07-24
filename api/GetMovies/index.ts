@@ -1,28 +1,19 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+const CosmosClient = require("@azure/cosmos").CosmosClient ;
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
 
-    const data = [
-        {
-            plot: 'バケモノの子供がいるねん',
-            title: 'バケモノの子',
-            poster: 'https://images-na.ssl-images-amazon.com/images/I/81Xag0zglmL.jpg'
-        },
-        {
-            plot: '千尋の親が豚になんねん',
-            title: '千と千尋の神隠し',
-            poster: 'https://www.ghibli.jp/images/chihiro.jpg'
-        },
-        {
-            plot: 'Harrison Ford kills robots',
-            title: 'Blade Runner',
-            poster: 'https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_.jpg'
-        }
-    ];
+    context.log('HTTP Trigger processed a request!');
+
+    let cosmosClient = new CosmosClient(process.env['CosmosConnectionString']);
+    let database = cosmosClient.database('movies');
+    let container = database.container('movies');
+    let count = process.env['MoviesCount'] ?? 50;
+    let {resources} = (await container.items.query('SELECT top ${count} * FROM c  where c.poster <> null order by c.year desc').fetchAll());
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: data
+        body: resources
     };
 
 };
