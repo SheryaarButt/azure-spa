@@ -9,7 +9,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     let database = cosmosClient.database('movies');
     let container = database.container('movies');
     let count = process.env['MoviesCount'] ?? 50;
-    let {resources} = (await container.items.query('SELECT top ${count} * FROM c  where c.poster <> null order by c.year desc').fetchAll());
+    let {resources} = (await container.items.query('SELECT top ${count} * FROM c  where c.poster <> null').fetchAll());
 
     context.res = {
         // status: 200, /* Defaults to 200 */
