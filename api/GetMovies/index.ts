@@ -5,7 +5,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     context.log('HTTP Trigger processed a request!');
 
-    let cosmosClient = new CosmosClient(process.env['CosmosConnectionString']);
+    let cosmosClient = new CosmosClient('AccountEndpoint=https://sheryaar-movies.documents.azure.com:443/;AccountKey=U0rvCZedgHuavmpkOXJFYzUVLpdMDaKOejw52Eje2DiqSflAsvrzy1kDmWLG89EE00ZAWiWwDo22GjhjJFWZog==;');
     let database = cosmosClient.database('movies');
     let container = database.container('movies');
     let {resources} = (await container.items.query('SELECT *').fetchAll());
